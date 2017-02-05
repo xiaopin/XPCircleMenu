@@ -30,8 +30,10 @@
 @property (nonatomic, assign) CGFloat borderLayoutMargin;
 /// 按钮数据
 @property (nonatomic, strong) NSArray<XPCircleMenuItem *> *menuItems;
-/// 菜单按钮文字颜色
+/// 菜单按钮文字颜色,默认`#1E1E1E`
 @property (nonatomic, strong) UIColor *menuTextColor;
+/// 菜单按钮文字字体,默认大小为`15.0`的系统字体
+@property (nonatomic, strong) UIFont *menuTextFont;
 /// 菜单中间的logo图片
 @property (nonatomic, strong, readonly) UIImageView *identifierImageView;
 /// 当滑动手势结束时是否自动调整按钮位置,默认`YES`

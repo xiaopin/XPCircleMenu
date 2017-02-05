@@ -151,6 +151,7 @@
     _borderLayoutMargin = 10.0;
     _radiansMap = [NSMutableDictionary dictionary];
     _menuTextColor = [UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:1.0];
+    _menuTextFont = [UIFont systemFontOfSize:15.0];
     _autoAdjustPosition = YES;
     
     _buttonContainerView = [[UIView alloc] init];
@@ -236,7 +237,7 @@
         [button setImage:[UIImage imageNamed:item.icon] forState:UIControlStateNormal];
         [button setTitle:item.title forState:UIControlStateNormal];
         [button setTitleColor:_menuTextColor forState:UIControlStateNormal];
-        button.titleLabel.font = [UIFont systemFontOfSize:15.0];
+        button.titleLabel.font = _menuTextFont;
         button.titleLabel.textAlignment = NSTextAlignmentCenter;
         button.imageView.contentMode = UIViewContentModeScaleAspectFit;
         [button addTarget:self action:@selector(buttonAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -248,6 +249,13 @@
     _menuTextColor = menuTextColor;
     for (UIButton *button in _buttonContainerView.subviews) {
         [button setTitleColor:menuTextColor forState:UIControlStateNormal];
+    }
+}
+
+- (void)setMenuTextFont:(UIFont *)menuTextFont {
+    _menuTextFont = menuTextFont;
+    for (UIButton *button in _buttonContainerView.subviews) {
+        button.titleLabel.font = menuTextFont;
     }
 }
 

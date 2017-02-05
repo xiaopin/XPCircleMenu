@@ -16,14 +16,19 @@
     if (nil == self.imageView.image) {
         self.imageView.frame = CGRectZero;
         self.titleLabel.frame = self.bounds;
+        self.titleLabel.numberOfLines = 0;
     } else if (nil == self.titleLabel.text || 0 == self.titleLabel.text.length) {
         self.imageView.frame = self.bounds;
         self.titleLabel.frame = CGRectZero;
     } else {
         CGFloat width = CGRectGetWidth(self.frame);
         CGFloat height = CGRectGetHeight(self.frame);
-        CGFloat textHeight = 15.0;
+        CGFloat textHeight = [self.titleLabel.text boundingRectWithSize:CGSizeMake(width, height)
+                                                                options:NSStringDrawingUsesLineFragmentOrigin
+                                                             attributes:@{NSFontAttributeName:self.titleLabel.font}
+                                                                context:NULL].size.height;
         CGFloat lineHeight = 5.0;
+        self.titleLabel.numberOfLines = 1;
         self.imageView.frame = CGRectMake(0.0, 0.0, width, height-textHeight-lineHeight);
         self.titleLabel.frame = CGRectMake(0.0, CGRectGetMaxY(self.imageView.frame)+lineHeight, width, textHeight);
     }
