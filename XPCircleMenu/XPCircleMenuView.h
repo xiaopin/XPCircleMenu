@@ -38,5 +38,7 @@
 @property (nonatomic, strong, readonly) UIImageView *identifierImageView;
 /// 当滑动手势结束时是否自动调整按钮位置,默认`YES`
 @property (nonatomic, assign, getter=isAutoAdjustPosition) BOOL autoAdjustPosition;
+/// 布局时默认偏移量,可以调整第一个按钮的初始位置,取值范围`0~±M_PI*2`,默认`-M_PI_2`以确保第一个按钮处于顶部正中间
+@property (nonatomic, assign) double defaultOffsetRadians;
 
 @end

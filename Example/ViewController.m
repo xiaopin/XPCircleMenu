@@ -27,6 +27,7 @@
     menuView.innerCircleRadius = 40.0;
 //    menuView.borderLayoutMargin = 40.0;
 //    menuView.autoAdjustPosition = NO;
+//    menuView.defaultOffsetRadians = M_PI/3;
     menuView.delegate = self;
     menuView.menuTextColor = [UIColor redColor];
     menuView.menuItems = @[

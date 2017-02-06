@@ -25,6 +25,8 @@
 @property (nonatomic, strong) NSMutableDictionary *radiansMap;
 /// 记录当前滑动手势偏移弧度
 @property (nonatomic, assign) float offsetRadians;
+/// 菜单半径
+@property (nonatomic, assign) CGFloat menuRadius;
 
 @end
 
@@ -52,8 +54,8 @@
     [super layoutSubviews];
     CGFloat maxWidth = CGRectGetWidth(self.frame);
     CGFloat maxHeight = CGRectGetHeight(self.frame);
-    CGFloat radius = MIN(maxWidth, maxHeight)/2;
-    self.layer.cornerRadius = radius;
+    _menuRadius = MIN(maxWidth, maxHeight)/2;
+    self.layer.cornerRadius = _menuRadius;
     
     _identifierImageView.frame = CGRectMake((maxWidth-_innerCircleRadius*2)/2,
                                             (maxHeight-_innerCircleRadius*2)/2,
@@ -70,7 +72,7 @@
     [_radiansMap removeAllObjects];
     for (NSInteger i=0,count=_buttonContainerView.subviews.count; i<count; i++) {
         NSString *key = [NSString stringWithFormat:@"%ld",i];
-        double radians = (M_PI*2/count)*i-M_PI_2;
+        double radians = (M_PI*2/count)*i+_defaultOffsetRadians;
         [_radiansMap setObject:@(radians) forKey:key];
     }
     [self adjustMenuButtonPositionWithOffsetRadians:0.0 isAnimation:NO];
@@ -153,6 +155,7 @@
     _menuTextColor = [UIColor colorWithRed:30/255.0 green:30/255.0 blue:30/255.0 alpha:1.0];
     _menuTextFont = [UIFont systemFontOfSize:15.0];
     _autoAdjustPosition = YES;
+    _defaultOffsetRadians = -M_PI_2;
     
     _buttonContainerView = [[UIView alloc] init];
     _buttonContainerView.backgroundColor = [UIColor clearColor];
@@ -171,9 +174,8 @@
 
 /// 检测坐标点处于第几象限
 - (NSInteger)quadrantWithPoint:(CGPoint)point {
-    CGFloat radius = MIN(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))*0.5;
-    CGFloat tmpX = point.x - radius;
-    CGFloat tmpY = point.y - radius;
+    CGFloat tmpX = point.x - _menuRadius;
+    CGFloat tmpY = point.y - _menuRadius;
     if (tmpX >= 0) {
         return tmpY>=0 ? 4: 1;
     }
@@ -182,9 +184,8 @@
 
 /// 根据坐标点获取旋转角度值
 - (double)angleWithPoint:(CGPoint)point {
-    CGFloat radius = MIN(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))*0.5;
-    CGFloat x = point.x - radius;
-    CGFloat y = point.y - radius;
+    CGFloat x = point.x - _menuRadius;
+    CGFloat y = point.y - _menuRadius;
     return asin(y/hypot(x, y))*180/M_PI;
 }
 
